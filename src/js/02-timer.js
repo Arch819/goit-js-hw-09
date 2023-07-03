@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import Notiflix from 'notiflix';
 import 'flatpickr/dist/flatpickr.min.css';
-import 'Notiflix/dist/notiflix-3.2.6.min.css';с
+import 'Notiflix/dist/notiflix-3.2.6.min.css';
 Notiflix.Notify.init({
   width: '320px',
   clickToClose: true,
