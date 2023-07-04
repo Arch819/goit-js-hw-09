@@ -4,6 +4,8 @@ const stopBtn = document.querySelector('[data-stop]');
 startBtn.addEventListener('click', onStartChangeStyle);
 stopBtn.addEventListener('click', onStopChangeStyle);
 
+let changeStyleId = null;
+
 function onStartChangeStyle() {
   changeStyleId = setInterval(() => {
     startBtn.disabled = true;

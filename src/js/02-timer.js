@@ -1,13 +1,19 @@
 import flatpickr from 'flatpickr';
 import Notiflix from 'notiflix';
 import 'flatpickr/dist/flatpickr.min.css';
-import 'Notiflix/dist/notiflix-3.2.6.min.css';
+// import 'Notiflix/dist/notiflix-3.2.6.min.css';
 Notiflix.Notify.init({
   width: '320px',
   clickToClose: true,
   pauseOnHover: true,
   fontSize: '14px',
 });
+const startBtn = document.querySelector('[data-start]');
+const daysEl = document.querySelector('[data-days]');
+const hoursEl = document.querySelector('[data-hours]');
+const minutesEl = document.querySelector('[data-minutes]');
+const secondsEl = document.querySelector('[data-seconds]');
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -15,18 +21,16 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    if (selectedDates[0] - Date.now() < 0) {
+      Notiflix.Notify.failure('Please choose a date in the future');
+    }
+    if (selectedDates[0] - Date.now() > 0) {
+      startBtn.disabled = false;
+    }
   },
 };
 const { enableTime, time_24hr, defaultDate, minuteIncrement, onClose } =
   options;
-const inputEl = document.querySelector('#datetime-picker');
-const startBtn = document.querySelector('[data-start]');
-const daysEl = document.querySelector('[data-days]');
-const hoursEl = document.querySelector('[data-hours]');
-const minutesEl = document.querySelector('[data-minutes]');
-const secondsEl = document.querySelector('[data-seconds]');
-
 
 const flatpickrResult = flatpickr('#datetime-picker', {
   enableTime,
@@ -35,20 +39,11 @@ const flatpickrResult = flatpickr('#datetime-picker', {
   minuteIncrement,
   onClose,
 });
-startBtn.disabled = true;
 
 const timer = {
   intervalId: null,
   deltaTime() {
     return flatpickrResult.selectedDates[0] - Date.now();
-  },
-  onDateSelection() {
-    if (this.deltaTime() < 0) {
-      Notiflix.Notify.failure('Please choose a date in the future');
-    }
-    if (this.deltaTime() > 0) {
-      startBtn.disabled = false;
-    }
   },
   startTimer() {
     startBtn.disabled = true;
@@ -75,7 +70,6 @@ const timer = {
   },
 };
 
-inputEl.addEventListener('change', timer.onDateSelection.bind(timer));
 startBtn.addEventListener('click', timer.startTimer.bind(timer));
 
 function addLeadingZero(value) {
