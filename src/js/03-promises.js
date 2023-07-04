@@ -1,5 +1,5 @@
 import Notiflix from 'notiflix';
-import 'Notiflix/dist/notiflix-3.2.6.min.css';
+//import 'Notiflix/dist/notiflix-3.2.6.min.css';
 
 const formRef = document.querySelector('.form');
 
