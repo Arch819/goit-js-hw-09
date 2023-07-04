@@ -13,6 +13,7 @@ const hoursEl = document.querySelector('[data-hours]');
 const minutesEl = document.querySelector('[data-minutes]');
 const secondsEl = document.querySelector('[data-seconds]');
 startBtn.disabled = true;
+let selectedDate = null;
 
 const options = {
   enableTime: true,
@@ -25,6 +26,7 @@ const options = {
     }
     if (selectedDates[0] - Date.now() > 0) {
       startBtn.disabled = false;
+      selectedDate = selectedDates[0];
     }
   },
 };
@@ -42,7 +44,7 @@ const flatpickrResult = flatpickr('#datetime-picker', {
 const timer = {
   intervalId: null,
   deltaTime() {
-    return flatpickrResult.selectedDates[0] - Date.now();
+    return selectedDate - Date.now();
   },
   startTimer() {
     startBtn.disabled = true;
